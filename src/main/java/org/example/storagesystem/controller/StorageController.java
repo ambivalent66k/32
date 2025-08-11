@@ -1,0 +1,63 @@
+package org.example.storagesystem.controller;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.example.storagesystem.dto.StorageDto;
+import org.example.storagesystem.dto.StoragePatchDto;
+import org.example.storagesystem.service.StorageService;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/storages")
+public class StorageController {
+    private final StorageService storageService;
+
+    @PostMapping()
+    public ResponseEntity<StorageDto> create(@RequestBody() StorageDto storageDto,
+                                           @Valid BindingResult bindingResult) throws BindException {
+        if (bindingResult.hasErrors()) {
+            throw new BindException(bindingResult);
+        }
+
+        return new ResponseEntity<>(storageService.createStorage(storageDto), HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<StorageDto> update(@RequestBody StoragePatchDto storagePatchDto,
+                                             @PathVariable(value = "id") Long storageId,
+                                             @Valid BindingResult bindingResult) throws BindException {
+        if (bindingResult.hasErrors()) {
+            throw new BindException(bindingResult);
+        }
+
+        return new ResponseEntity<>(storageService.updateStorage(storagePatchDto, storageId), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StorageDto> get(@PathVariable(value = "id") Long storageId) {
+        return new ResponseEntity<>(storageService.findWithChildrenById(storageId), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<StorageDto>> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return new ResponseEntity<>(
+                storageService.findAll(page, size),
+                HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") Long storageId) {
+        storageService.deleteById(storageId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+}
