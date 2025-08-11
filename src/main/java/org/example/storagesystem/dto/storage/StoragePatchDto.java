@@ -1,4 +1,4 @@
-package org.example.storagesystem.dto;
+package org.example.storagesystem.dto.storage;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonSetter;

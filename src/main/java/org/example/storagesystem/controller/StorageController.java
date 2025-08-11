@@ -2,8 +2,8 @@ package org.example.storagesystem.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.storagesystem.dto.StorageDto;
-import org.example.storagesystem.dto.StoragePatchDto;
+import org.example.storagesystem.dto.storage.StorageDto;
+import org.example.storagesystem.dto.storage.StoragePatchDto;
 import org.example.storagesystem.service.StorageService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,8 @@ public class StorageController {
     private final StorageService storageService;
 
     @PostMapping()
-    public ResponseEntity<StorageDto> create(@RequestBody() StorageDto storageDto,
-                                           @Valid BindingResult bindingResult) throws BindException {
+    public ResponseEntity<StorageDto> create(@Valid @RequestBody() StorageDto storageDto,
+                                           BindingResult bindingResult) throws BindException {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
@@ -29,9 +29,9 @@ public class StorageController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<StorageDto> update(@RequestBody StoragePatchDto storagePatchDto,
+    public ResponseEntity<StorageDto> update(@Valid @RequestBody StoragePatchDto storagePatchDto,
                                              @PathVariable(value = "id") Long storageId,
-                                             @Valid BindingResult bindingResult) throws BindException {
+                                             BindingResult bindingResult) throws BindException {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }

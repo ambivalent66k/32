@@ -1,8 +1,8 @@
 package org.example.storagesystem.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.storagesystem.dto.StorageDto;
-import org.example.storagesystem.dto.StoragePatchDto;
+import org.example.storagesystem.dto.storage.StorageDto;
+import org.example.storagesystem.dto.storage.StoragePatchDto;
 import org.example.storagesystem.entity.Storage;
 import org.example.storagesystem.exception.ErrorCode;
 import org.example.storagesystem.exception.custom.BusinessException;
@@ -12,8 +12,6 @@ import org.example.storagesystem.service.StorageService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor

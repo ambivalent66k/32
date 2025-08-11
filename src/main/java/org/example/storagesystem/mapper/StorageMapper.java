@@ -1,8 +1,8 @@
 package org.example.storagesystem.mapper;
 
-import org.example.storagesystem.dto.ChildStorageDto;
-import org.example.storagesystem.dto.StorageDto;
-import org.example.storagesystem.dto.StoragePatchDto;
+import org.example.storagesystem.dto.storage.ChildStorageDto;
+import org.example.storagesystem.dto.storage.StorageDto;
+import org.example.storagesystem.dto.storage.StoragePatchDto;
 import org.example.storagesystem.entity.Storage;
 import org.example.storagesystem.exception.ErrorCode;
 import org.example.storagesystem.repository.StorageRepository;

@@ -1,4 +1,4 @@
-package org.example.storagesystem.dto;
+package org.example.storagesystem.dto.storage;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

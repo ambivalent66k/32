@@ -1,7 +1,7 @@
 package org.example.storagesystem.service;
 
-import org.example.storagesystem.dto.StorageDto;
-import org.example.storagesystem.dto.StoragePatchDto;
+import org.example.storagesystem.dto.storage.StorageDto;
+import org.example.storagesystem.dto.storage.StoragePatchDto;
 import org.springframework.data.domain.Page;
 
 public interface StorageService {

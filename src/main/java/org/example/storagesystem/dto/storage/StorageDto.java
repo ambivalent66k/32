@@ -1,7 +1,8 @@
-package org.example.storagesystem.dto;
+package org.example.storagesystem.dto.storage;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class StorageDto {
 
     private Long parentStorageId;
 
+    @NotNull(message = "it cannot be empty")
     private Long createdBy;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
