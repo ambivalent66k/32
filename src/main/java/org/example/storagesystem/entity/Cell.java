@@ -19,9 +19,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "storages")
+@Table(name = "cells")
 @EntityListeners(AuditingEntityListener.class)
-public class Storage {
+public class Cell {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,27 +29,30 @@ public class Storage {
     @Column(nullable = false)
     private String name;
 
-    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)
     private String location;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_storage_id")
-    private Storage parentStorage;
-
-    @OneToMany(mappedBy = "parentStorage", cascade = CascadeType.ALL)
-    private List<Storage> children = new ArrayList<>();
-
-    @OneToMany(mappedBy = "storage", cascade = CascadeType.ALL)
-    public List<Cell> cells = new ArrayList<>();
-
     @Column(nullable = false)
+    private int capacity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "storage_id", nullable = false)
+    private Storage storage;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_cell_id")
+    private Cell parentCell;
+
+    @OneToMany(mappedBy = "parentCell", cascade = CascadeType.ALL)
+    private List<Cell> children = new ArrayList<>();
+
+    @Column(name = "createdBy", nullable = false)
     private Long createdBy;
 
     @CreatedDate
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime createdAt;
 

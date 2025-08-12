@@ -12,6 +12,7 @@ import org.example.storagesystem.service.StorageService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,15 +22,14 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public StorageDto createStorage(StorageDto storageDto) {
-        Storage storage;
+        Storage storage = storageMapper.mapTo(storageDto);
 
-        if (storageDto.getParentStorageId() != null &&
-                storageRepository.existsById(storageDto.getParentStorageId())) {
-            storage = storageMapper.mapTo(storageDto);
-        } else if (storageDto.getParentStorageId() == null) {
-            storage = storageMapper.mapTo(storageDto);
-        } else {
-            throw new BusinessException(ErrorCode.STORAGE_NOT_FOUND, storageDto.getParentStorageId());
+        if (storageDto.getParentStorageId() != null) {
+            Storage parentStorage = storageRepository.findById(storageDto.getParentStorageId())
+                    .orElseThrow(() -> new BusinessException(
+                            ErrorCode.STORAGE_NOT_FOUND, storageDto.getParentStorageId())
+                    );
+            storage.setParentStorage(parentStorage);
         }
 
         storageRepository.save(storage);
@@ -38,29 +38,37 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
+    @Transactional
     public StorageDto updateStorage(StoragePatchDto storageDto, Long storageId) {
         Storage storage = storageRepository.findById(storageId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.STORAGE_NOT_FOUND, storageId));
 
-        if (!storageDto.isParentStorageIdIsPresent()) {
-            storage = storageMapper.updateEntityFromDto(storageDto, storage);
-        } else if (storageDto.getParentStorageId() == null) {
-            storage = storageMapper.updateEntityFromDto(storageDto, storage);
-            storage.setParentStorage(null);
-        } else if (storageRepository.existsById(storageDto.getParentStorageId())) {
-            if (storageId.equals(storageDto.getParentStorageId())) {
-                throw new BusinessException(ErrorCode.STORAGE_CANNOT_BE_SELF, storageDto.getParentStorageId());
-            }
+        if (storageDto.isParentStorageIdIsPresent()) {
+            if (storageDto.getParentStorageId() == null) {
+                storage.setParentStorage(null);
+            } else {
+                if (!storageRepository.existsById(storageDto.getParentStorageId())) {
+                    throw new BusinessException(ErrorCode.STORAGE_NOT_FOUND);
+                }
 
-            if (storageRepository.hasCycle(storageId, storageDto.getParentStorageId())) {
-                throw new BusinessException(ErrorCode.STORAGE_HAS_CYCLE, storageDto.getParentStorageId());
-            }
+                if (storageId.equals(storageDto.getParentStorageId())) {
+                    throw new BusinessException(ErrorCode.STORAGE_CANNOT_BE_SELF);
+                }
 
-            storage = storageMapper.updateEntityFromDto(storageDto, storage);
-        } else {
-            throw new BusinessException(ErrorCode.STORAGE_NOT_FOUND, storageDto.getParentStorageId());
+                if (storageRepository.hasCycle(storageId, storageDto.getParentStorageId())) {
+                    throw new BusinessException(ErrorCode.STORAGE_HAS_CYCLE);
+                }
+
+                Storage newParent = storageRepository.findById(storageDto.getParentStorageId())
+                        .orElseThrow(() -> new BusinessException(
+                                ErrorCode.STORAGE_NOT_FOUND, storageDto.getParentStorageId())
+                        );
+
+                storage.setParentStorage(newParent);
+            }
         }
 
+        storage = storageMapper.updateEntityFromDto(storageDto, storage);
         storageRepository.save(storage);
 
         return storageMapper.mapTo(storage);
@@ -70,10 +78,10 @@ public class StorageServiceImpl implements StorageService {
     public void deleteById(Long id) {
         Storage storage = storageRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.STORAGE_NOT_FOUND, id)
-        );
+                );
 
         if (!storage.getChildren().isEmpty()) {
-            throw new BusinessException(ErrorCode.STORAGE_IS_NOT_EMPTY, id);
+            throw new BusinessException(ErrorCode.STORAGE_IS_NOT_EMPTY);
         }
 
         storageRepository.deleteById(id);
@@ -84,15 +92,12 @@ public class StorageServiceImpl implements StorageService {
         Storage storage = storageRepository.findWithChildrenById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.STORAGE_NOT_FOUND, id));
 
-        StorageDto storageDto = storageMapper.mapTo(storage);
-        storageDto.setChildren(storageMapper.toChildDtoList(storage.getChildren()));
-
-        return storageDto;
+        return storageMapper.mapTo(storage);
     }
 
     @Override
     public Page<StorageDto> findAll(int page, int size) {
-        Page<Storage> storages = storageRepository.findAll(PageRequest.of(page, size));
+        Page<Storage> storages = storageRepository.findAllWithChildren(PageRequest.of(page, size));
         return storages.map(storageMapper::mapTo);
     }
 }
