@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/storages")
+@RequestMapping("dev-api.storage-system.ru/v1/storages")
 public class StorageController {
     private final StorageService storageService;
 
@@ -40,7 +40,7 @@ public class StorageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StorageDto> get(@PathVariable(value = "id") Long storageId) {
+    public ResponseEntity<StorageDto> findById(@PathVariable(value = "id") Long storageId) {
         return new ResponseEntity<>(storageService.findWithChildrenById(storageId), HttpStatus.OK);
     }
 
@@ -55,7 +55,7 @@ public class StorageController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id") Long storageId) {
+    public ResponseEntity<Void> deleteById(@PathVariable(value = "id") Long storageId) {
         storageService.deleteById(storageId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
