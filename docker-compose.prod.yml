@@ -1,0 +1,85 @@
+name: storage_system_prod
+
+services:
+  # PostgreSQL база данных  
+  postgres:
+    image: postgres:17
+    container_name: storage_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - storage_network
+
+  # MinIO S3-совместимое хранилище
+  minio:
+    image: minio/minio:latest
+    container_name: storage_minio
+    restart: unless-stopped
+    command: server /data --console-address ":${S3_WEB_DOCKER_PORT}"
+    environment:
+      MINIO_ROOT_USER: ${S3_USERNAME}
+      MINIO_ROOT_PASSWORD: ${S3_PASSWORD}
+    ports:
+      - "${S3_API_PORT}:${S3_API_DOCKER_PORT}"
+      - "${S3_WEB_PORT}:${S3_WEB_DOCKER_PORT}"
+    volumes:
+      - minio_data:/data
+    networks:
+      - storage_network
+
+  # Spring Boot приложение
+  storage_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: storage_system_app
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - minio
+    environment:
+      - DB_URL=postgres
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - S3_USERNAME=${S3_USERNAME}
+      - S3_PASSWORD=${S3_PASSWORD}
+      - S3_API_PORT=${S3_API_DOCKER_PORT}
+      - S3_WEB_PORT=${S3_WEB_DOCKER_PORT}
+    expose:
+      - "8080"
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - storage_network
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: storage_nginx
+    restart: unless-stopped
+    depends_on:
+      - storage_app
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    networks:
+      - storage_network
+
+volumes:
+  postgres_data:
+  minio_data:
+
+networks:
+  storage_network:
+    driver: bridge

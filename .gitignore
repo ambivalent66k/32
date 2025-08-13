@@ -32,3 +32,18 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Логи
+*.log
+app.log
+logs/
+
+# Backup файлы
+*.backup
+
+# IDE
+.idea/
+*.iml
+
+# Target
+target/
