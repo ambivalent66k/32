@@ -4,7 +4,11 @@ package org.example.storagesystem.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.storagesystem.dto.cell.CellDto;
+import org.example.storagesystem.dto.cell.CellMoveDto;
 import org.example.storagesystem.dto.cell.CellPatchDto;
+import org.example.storagesystem.dto.cell.response.CellDtoResponse;
+import org.example.storagesystem.dto.cell.response.CellDtoResponseOnMove;
+import org.example.storagesystem.dto.cell.response.CellDtosResponse;
 import org.example.storagesystem.service.CellService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -39,13 +43,19 @@ public class CellController {
         return new ResponseEntity<>(cellService.updateCell(cellPatchDto, cellId), HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/move")
+    public ResponseEntity<CellDtoResponseOnMove> move(@RequestBody CellMoveDto cellMoveDto,
+                                                      @PathVariable(value = "id") Long cellId) {
+        return new ResponseEntity<>(cellService.moveCell(cellMoveDto, cellId), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<CellDto> findById(@PathVariable(value = "id") Long storageId) {
-        return new ResponseEntity<>(cellService.findWithChildrenById(storageId), HttpStatus.OK);
+    public ResponseEntity<CellDtoResponse> findById(@PathVariable(value = "id") Long storageId) {
+        return new ResponseEntity<>(cellService.findById(storageId), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<Page<CellDto>> findAll(
+    public ResponseEntity<Page<CellDtosResponse>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
         return new ResponseEntity<>(

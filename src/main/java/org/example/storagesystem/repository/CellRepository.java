@@ -1,13 +1,16 @@
 package org.example.storagesystem.repository;
 
 import org.example.storagesystem.entity.Cell;
+import org.example.storagesystem.entity.Storage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CellRepository extends JpaRepository<Cell, Long> {
@@ -32,7 +35,21 @@ public interface CellRepository extends JpaRepository<Cell, Long> {
     @Query("select s from Cell s where s.id = :id")
     Optional<Cell> findWithChildrenById(@Param("id") Long id);
 
-    @EntityGraph(attributePaths = "children")
-    @Query("SELECT c FROM Cell c")
-    Page<Cell> findAllWithChildren(Pageable pageable);
+    @EntityGraph(attributePaths = {"storageObjects"})
+    @Query("select s from Cell s where s.id = :id")
+    Optional<Cell> findWithObjectsById(@Param("id") Long id);
+
+    @EntityGraph(attributePaths = {"storage"})
+    @Query("select s from Cell s where s.id = :id")
+    Optional<Cell> findWithStorage(@Param("id") Long id);
+
+    @EntityGraph(attributePaths = {"storage"})
+    @Query("select c from Cell c")
+    Page<Cell> findAllWithStorage(Pageable pageable);
+
+    @Modifying
+    @Query("update Cell c set c.storage.id = :newStorageId where c.storage.id = :oldStorageId")
+    void updateCellsStorage(@Param("oldStorageId") Long oldStorageId, @Param("newStorageId") Long newStorageId);
+
+    Optional<List<Cell>> findByStorageId(Long storageId);
 }

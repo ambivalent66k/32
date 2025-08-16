@@ -10,9 +10,15 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
 
   liquibase:
-    enabled: true
+    enabled: false
     change-log: db/changelog/main-changelog.xml
+
+springdoc:
+  swagger-ui:
+    path: swagger-ui/index.html
+
+

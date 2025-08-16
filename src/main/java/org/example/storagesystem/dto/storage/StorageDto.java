@@ -45,5 +45,4 @@ public class StorageDto {
     private List<CellDto> cells;
 
     private List<ChildStorageDto> children;
-
 }

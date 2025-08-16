@@ -31,8 +31,4 @@ public interface StorageRepository extends JpaRepository<Storage, Long> {
     @EntityGraph(attributePaths = {"children"})
     @Query("select s from Storage s where s.id = :id")
     Optional<Storage> findWithChildrenById(@Param("id") Long id);
-
-    @EntityGraph(attributePaths = {"children"})
-    @Query("select s from Storage s")
-    Page<Storage> findAllWithChildren(Pageable pageable);
 }

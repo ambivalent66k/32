@@ -3,6 +3,9 @@ package org.example.storagesystem.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.storagesystem.dto.storage.StorageDto;
+import org.example.storagesystem.dto.storage.StorageMoveDto;
+import org.example.storagesystem.dto.storage.response.StorageDtoResponse;
+import org.example.storagesystem.dto.storage.response.StorageDtosResponse;
 import org.example.storagesystem.dto.storage.StoragePatchDto;
 import org.example.storagesystem.service.StorageService;
 import org.springframework.data.domain.Page;
@@ -39,13 +42,21 @@ public class StorageController {
         return new ResponseEntity<>(storageService.updateStorage(storagePatchDto, storageId), HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/move")
+    public ResponseEntity<StorageDtoResponse> move(@RequestBody StorageMoveDto storageMoveDto,
+                                             @PathVariable(value = "id") Long storageId){
+        return new ResponseEntity<>(storageService.moveStorage(storageMoveDto, storageId), HttpStatus.OK);
+    }
+
+
+
     @GetMapping("/{id}")
-    public ResponseEntity<StorageDto> findById(@PathVariable(value = "id") Long storageId) {
-        return new ResponseEntity<>(storageService.findWithChildrenById(storageId), HttpStatus.OK);
+    public ResponseEntity<StorageDtoResponse> findById(@PathVariable(value = "id") Long storageId) {
+        return new ResponseEntity<>(storageService.findById(storageId), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<Page<StorageDto>> findAll(
+    public ResponseEntity<Page<StorageDtosResponse>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
         return new ResponseEntity<>(

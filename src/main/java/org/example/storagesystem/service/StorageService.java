@@ -1,6 +1,11 @@
 package org.example.storagesystem.service;
 
+import org.example.storagesystem.dto.cell.CellMoveDto;
+import org.example.storagesystem.dto.cell.response.CellDtoResponseOnMove;
 import org.example.storagesystem.dto.storage.StorageDto;
+import org.example.storagesystem.dto.storage.StorageMoveDto;
+import org.example.storagesystem.dto.storage.response.StorageDtoResponse;
+import org.example.storagesystem.dto.storage.response.StorageDtosResponse;
 import org.example.storagesystem.dto.storage.StoragePatchDto;
 import org.springframework.data.domain.Page;
 
@@ -9,9 +14,11 @@ public interface StorageService {
 
     StorageDto updateStorage(StoragePatchDto storageDto, Long storageId);
 
-    StorageDto findWithChildrenById(Long id);
+    StorageDtoResponse findById(Long id);
 
-    Page<StorageDto> findAll(int page, int size);
+    StorageDtoResponse moveStorage(StorageMoveDto storageMoveDto, Long storageId);
+
+    Page<StorageDtosResponse> findAll(int page, int size);
 
     void deleteById(Long id);
 }
