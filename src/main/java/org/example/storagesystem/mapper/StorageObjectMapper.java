@@ -1,7 +1,6 @@
 package org.example.storagesystem.mapper;
 
 import org.example.storagesystem.dto.storageObject.StorageObjectDto;
-import org.example.storagesystem.dto.storageObject.StorageObjectMove;
 import org.example.storagesystem.dto.storageObject.StorageObjectPatchDto;
 import org.example.storagesystem.dto.storageObject.response.StorageObjectDtoResponse;
 import org.example.storagesystem.entity.StorageObject;

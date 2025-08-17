@@ -65,7 +65,10 @@ public enum ErrorCode {
     QUANTITY_CANNOT_BE_NEGATIVE(
             "QUANTITY_CANNOT_BE_NEGATIVE",
             "quantity cannot be negative",
-            HttpStatus.BAD_REQUEST)
+            HttpStatus.BAD_REQUEST),
+    QR_NOT_FOUND("QR_NOT_FOUND", "qr not found with id %s", HttpStatus.NOT_FOUND),
+    PHOTO_NOT_UPLOADED("PHOTO_NOT_UPLOADED", "photo not uploaded", HttpStatus.BAD_REQUEST),
+    PHOTO_NOT_DELETED("PHOTO_NOT_DELETED", "photo not deleted", HttpStatus.BAD_REQUEST),
     ;
 
     private final String code;

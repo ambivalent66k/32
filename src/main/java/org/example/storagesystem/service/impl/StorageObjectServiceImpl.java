@@ -13,11 +13,13 @@ import org.example.storagesystem.mapper.StorageObjectMapper;
 import org.example.storagesystem.repository.CellRepository;
 import org.example.storagesystem.repository.StorageObjectRepository;
 import org.example.storagesystem.repository.StorageRepository;
+import org.example.storagesystem.service.S3StorageService;
 import org.example.storagesystem.service.StorageObjectService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -27,12 +29,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class StorageObjectServiceImpl implements StorageObjectService {
     private final CellRepository cellRepository;
+    private final S3StorageService s3StorageService;
     private final StorageObjectMapper storageObjectMapper;
     private final StorageRepository storageRepository;
     private final StorageObjectRepository storageObjectRepository;
 
     @Override
-    public StorageObjectDto createObject(StorageObjectDto storageObjectDto) {
+    public StorageObjectDto createObject(StorageObjectDto storageObjectDto, MultipartFile photo) {
         Storage storage = storageRepository.findById(storageObjectDto.getStorageId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.STORAGE_NOT_FOUND, storageObjectDto.getStorageId()));
 
@@ -63,6 +66,11 @@ public class StorageObjectServiceImpl implements StorageObjectService {
             storageObject.setCustomAttributes(customMap);
         }
 
+        if (photo != null && !photo.isEmpty()) {
+            String phUrl = s3StorageService.uploadFile("photos", photo);
+            storageObject.setPhotoUrl(phUrl);
+        }
+
         storageObjectRepository.save(storageObject);
 
         return storageObjectMapper.mapTo(storageObject);
@@ -70,7 +78,9 @@ public class StorageObjectServiceImpl implements StorageObjectService {
 
     @Override
     @Transactional
-    public StorageObjectDto updateObject(StorageObjectPatchDto storageObjectDto, Long id) {
+    public StorageObjectDto updateObject(StorageObjectPatchDto storageObjectDto,
+                                         MultipartFile photo,
+                                         Long id) {
         StorageObject storageObject = storageObjectRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.STORAGE_OBJECT_NOT_FOUND, id));
 
@@ -81,6 +91,15 @@ public class StorageObjectServiceImpl implements StorageObjectService {
                                     storageObjectDto.getCellId()));
 
             checkOccupiedQuantity(cell, storageObject, storageObjectDto);
+        }
+
+        if (photo != null && !photo.isEmpty()) {
+            String phUrl = s3StorageService.uploadFile("photos", photo);
+            storageObject.setPhotoUrl(phUrl);
+        }
+
+        if (photo == null) {
+            storageObject.setPhotoUrl(null);
         }
 
         storageObject = storageObjectMapper.updateEntityFromDto(storageObjectDto, storageObject);

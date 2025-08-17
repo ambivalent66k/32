@@ -10,10 +10,12 @@ import org.example.storagesystem.dto.storageObject.response.StorageObjectDtoResp
 import org.example.storagesystem.service.StorageObjectService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,25 +23,30 @@ import org.springframework.web.bind.annotation.*;
 public class StorageObjectController {
     private final StorageObjectService storageObjectService;
 
-    @PostMapping()
-    public ResponseEntity<StorageObjectDto> create(@Valid @RequestBody() StorageObjectDto StorageObjectDto,
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<StorageObjectDto> create(@Valid @RequestPart("object") StorageObjectDto StorageObjectDto,
+                                                   @RequestPart(value = "photo", required = false) MultipartFile photo,
                                                    BindingResult bindingResult) throws BindException {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
 
-        return new ResponseEntity<>(storageObjectService.createObject(StorageObjectDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(storageObjectService.createObject(StorageObjectDto, photo), HttpStatus.CREATED);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<StorageObjectDto> update(@Valid @RequestBody StorageObjectPatchDto storageObjectPatchDto,
-                                             @PathVariable(value = "id") Long objectId,
+    @PatchMapping(path = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<StorageObjectDto> update(@Valid @RequestPart("object") StorageObjectPatchDto storageObjectPatchDto,
+                                                   @PathVariable(value = "id") Long objectId,
+                                                   @RequestPart(value = "photo", required = false) MultipartFile photo,
                                              BindingResult bindingResult) throws BindException {
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
         }
 
-        return new ResponseEntity<>(storageObjectService.updateObject(storageObjectPatchDto, objectId), HttpStatus.OK);
+        return new ResponseEntity<>(
+                storageObjectService.updateObject(storageObjectPatchDto, photo,objectId),
+                HttpStatus.OK
+        );
     }
 
     @PostMapping("/{id}/move")

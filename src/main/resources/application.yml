@@ -21,4 +21,9 @@ springdoc:
   swagger-ui:
     path: swagger-ui/index.html
 
-
+s3:
+  endpoint: ${ENDPOINT}
+  access-key: ${ACCESS-KEY}
+  secret-key: ${SECRET-KEY}
+  bucket-name: ${BUCKET-NAME}
+  region: ${REGION}

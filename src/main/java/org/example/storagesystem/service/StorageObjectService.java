@@ -7,12 +7,15 @@ import org.example.storagesystem.dto.storageObject.StorageObjectPatchDto;
 import org.example.storagesystem.dto.storageObject.response.StorageObjectDtoResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface StorageObjectService {
 
-    StorageObjectDto createObject(StorageObjectDto storageObjectDto);
+    StorageObjectDto createObject(StorageObjectDto storageObjectDto, MultipartFile photo);
 
-    StorageObjectDto updateObject(StorageObjectPatchDto storageObjectDto, Long id);
+    StorageObjectDto updateObject(StorageObjectPatchDto storageObjectDto,
+                                  MultipartFile photo,
+                                  Long id);
 
     @Transactional
     StorageObjectDto moveObject(StorageObjectMove storageObjectMove, Long id);
