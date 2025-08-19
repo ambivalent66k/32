@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.storagesystem.dto.cell.response.CellDtoResponse;
+import org.example.storagesystem.dto.cell.response.CellDtosResponse;
 import org.example.storagesystem.dto.storage.ChildStorageDto;
 import org.example.storagesystem.dto.storageObject.response.StorageObjectDtoResponse;
 
@@ -34,7 +34,7 @@ public class StorageDtoResponse {
 
     private List<StorageObjectDtoResponse> storageObjects;
 
-    private List<CellDtoResponse> cells;
+    private List<CellDtosResponse> cells;
 
     private List<ChildStorageDto> children;
 }
