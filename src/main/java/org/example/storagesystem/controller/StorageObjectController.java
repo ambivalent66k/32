@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/dev-api.storage-system.ru/v1/storage-objects")
+@RequestMapping("http://10.10.146.221/api/v1/objects")
 public class StorageObjectController {
     private final StorageObjectService storageObjectService;
 
@@ -69,7 +69,7 @@ public class StorageObjectController {
     @GetMapping
     public ResponseEntity<Page<StorageObjectDtoResponse>> findAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
+            @RequestParam(defaultValue = "10") int size) {
         return new ResponseEntity<>(
                 storageObjectService.findAll(page, size),
                 HttpStatus.OK
