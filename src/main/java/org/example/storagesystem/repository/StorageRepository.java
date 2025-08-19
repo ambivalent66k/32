@@ -1,6 +1,8 @@
 package org.example.storagesystem.repository;
 
 import org.example.storagesystem.entity.Storage;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,5 +29,6 @@ public interface StorageRepository extends JpaRepository<Storage, Long> {
                      @Param("parentId") Long parentId);
 
     @EntityGraph(attributePaths = {"children"})
-    Optional<Storage> findWithChildrenById(Long id);
+    @Query("select s from Storage s where s.id = :id")
+    Optional<Storage> findWithChildrenById(@Param("id") Long id);
 }

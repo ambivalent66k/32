@@ -39,8 +39,14 @@ public class Storage {
     @JoinColumn(name = "parent_storage_id")
     private Storage parentStorage;
 
-    @OneToMany(mappedBy = "parentStorage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parentStorage")
     private List<Storage> children = new ArrayList<>();
+
+    @OneToMany(mappedBy = "storage")
+    private List<Cell> cells = new ArrayList<>();
+
+    @OneToMany(mappedBy = "storage")
+    private List<StorageObject> storageObjects = new ArrayList<>();
 
     @Column(nullable = false)
     private Long createdBy;

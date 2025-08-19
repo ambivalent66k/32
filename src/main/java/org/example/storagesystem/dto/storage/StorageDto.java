@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.storagesystem.dto.cell.CellDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,6 +41,8 @@ public class StorageDto {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime updatedAt;
+
+    private List<CellDto> cells;
 
     private List<ChildStorageDto> children;
 }

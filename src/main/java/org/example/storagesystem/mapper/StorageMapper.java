@@ -1,41 +1,39 @@
 package org.example.storagesystem.mapper;
 
-import org.example.storagesystem.dto.storage.ChildStorageDto;
 import org.example.storagesystem.dto.storage.StorageDto;
+import org.example.storagesystem.dto.storage.StorageMoveDto;
 import org.example.storagesystem.dto.storage.StoragePatchDto;
+import org.example.storagesystem.dto.storage.response.StorageDtoResponse;
+import org.example.storagesystem.dto.storage.response.StorageDtosResponse;
 import org.example.storagesystem.entity.Storage;
-import org.example.storagesystem.exception.ErrorCode;
-import org.example.storagesystem.repository.StorageRepository;
-import org.example.storagesystem.exception.custom.BusinessException;
-import org.mapstruct.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = "spring",
-        uses = {StorageMapper.class},
+        uses = {CellMapper.class, StorageObjectMapper.class},
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public abstract class StorageMapper {
-    @Autowired
-    protected StorageRepository storageRepository;
-
+public interface StorageMapper {
     @Mapping(target = "parentStorage", ignore = true)
-    public abstract Storage mapTo(StorageDto storageDto);
+    @Mapping(target = "cells", ignore = true)
+    Storage mapTo(StorageDto storageDto);
+
+    @Mapping(target = "children", ignore = true)
+    @Mapping(target = "cells", ignore = true)
+    @Mapping(source = "parentStorage.id", target = "parentStorageId")
+    StorageDto mapTo(Storage storage);
 
     @Mapping(source = "parentStorage.id", target = "parentStorageId")
-    public abstract StorageDto mapTo(Storage storage);
+    StorageDtoResponse mapToDto(Storage storage);
 
-    public abstract List<ChildStorageDto> toChildDtoList(List<Storage> children);
+    StorageDtosResponse mapToList(Storage storage);
 
     @Mapping(target = "parentStorage", ignore = true)
-    public abstract Storage updateEntityFromDto(StoragePatchDto storagePatchDto, @MappingTarget Storage storage);
+    @Mapping(target = "storageObjects", ignore = true)
+    @Mapping(target = "children", ignore = true)
+    @Mapping(target = "cells", ignore = true)
+    Storage updateEntityFromDto(StoragePatchDto storagePatchDto, @MappingTarget Storage storage);
 
-    @AfterMapping
-    protected void setParentStorage(StoragePatchDto dto, @MappingTarget Storage storage) {
-        if (dto.getParentStorageId() != null) {
-            Storage parent = storageRepository.findById(dto.getParentStorageId())
-                    .orElseThrow(() -> new BusinessException(ErrorCode.STORAGE_NOT_FOUND, dto.getParentStorageId()));
-            storage.setParentStorage(parent);
-        }
-    }
+    Storage moveStorage(StorageMoveDto storageMoveDto, @MappingTarget Storage storage);
 }
