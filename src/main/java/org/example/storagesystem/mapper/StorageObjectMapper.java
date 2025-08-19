@@ -22,6 +22,8 @@ public interface StorageObjectMapper {
 //    @Mapping(target = "storage", ignore = true)
     StorageObject mapTo(StorageObjectDto dto);
 
+    @Mapping(target = "cellId", source = "cell.id")
+    @Mapping(target = "storageId", source = "storage.id")
     StorageObjectDtoResponse toDto(StorageObject storageObject);
 
     @Mapping(target = "storage", ignore = true)
