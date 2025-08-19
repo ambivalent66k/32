@@ -71,6 +71,7 @@ public enum ErrorCode {
     QRCODE_NOT_FOUNT("QRCODE_NOT_FOUND", "qrcode not found", HttpStatus.NOT_FOUND),
     ;
 
+
     private final String code;
     private final String defaultMessage;
     private final HttpStatus status;
