@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.storagesystem.enums.Status;
+import org.example.storagesystem.enums.object.Status;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
