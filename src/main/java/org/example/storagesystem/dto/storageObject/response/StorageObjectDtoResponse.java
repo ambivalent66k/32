@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.storagesystem.dto.storageObject.CustomAttributeDto;
-import org.example.storagesystem.enums.Status;
+import org.example.storagesystem.enums.object.Status;
 
 import java.util.List;
 

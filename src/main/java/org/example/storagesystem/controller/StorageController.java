@@ -58,7 +58,7 @@ public class StorageController {
     @GetMapping
     public ResponseEntity<Page<StorageDtosResponse>> findAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
+            @RequestParam(defaultValue = "10") int size) {
         return new ResponseEntity<>(
                 storageService.findAll(page, size),
                 HttpStatus.OK

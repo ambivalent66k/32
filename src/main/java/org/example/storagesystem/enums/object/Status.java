@@ -1,4 +1,4 @@
-package org.example.storagesystem.enums;
+package org.example.storagesystem.enums.object;
 
 public enum Status {
     ACTIVE,

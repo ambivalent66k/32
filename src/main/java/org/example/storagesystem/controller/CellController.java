@@ -57,7 +57,7 @@ public class CellController {
     @GetMapping
     public ResponseEntity<Page<CellDtosResponse>> findAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
+            @RequestParam(defaultValue = "10") int size) {
         return new ResponseEntity<>(
                 cellService.findAll(page, size),
                 HttpStatus.OK
