@@ -45,8 +45,11 @@ public class Cell {
     @JoinColumn(name = "parent_cell_id")
     private Cell parentCell;
 
-    @OneToMany(mappedBy = "parentCell", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parentCell")
     private List<Cell> children = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cell")
+    private List<StorageObject> storageObjects = new ArrayList<>();
 
     @Column(name = "createdBy", nullable = false)
     private Long createdBy;
