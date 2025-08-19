@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("dev-api.storage-system.ru/v1")
+@RequestMapping("http://10.10.146.221/api/v1/")
 public class QrCodeController {
     private final QrCodeService qrCodeService;
 

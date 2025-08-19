@@ -65,8 +65,10 @@ public enum ErrorCode {
     QUANTITY_CANNOT_BE_NEGATIVE(
             "QUANTITY_CANNOT_BE_NEGATIVE",
             "quantity cannot be negative",
-            HttpStatus.BAD_REQUEST)
+            HttpStatus.BAD_REQUEST),
+    QRCODE_NOT_FOUND("QRCODE_NOT_FOUND", "qrcode not found", HttpStatus.NOT_FOUND),
     ;
+
 
     private final String code;
     private final String defaultMessage;

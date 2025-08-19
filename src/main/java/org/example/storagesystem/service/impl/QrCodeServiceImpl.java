@@ -35,7 +35,7 @@ public class QrCodeServiceImpl implements QrCodeService {
 
         if (qrCodeRepository.existsByStorageId(storageId)) {
             qrCode = qrCodeRepository.findByStorageId(storageId)
-                    .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUNT, storageId));
+                    .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUND));
         } else {
             qrCode = new QRCode();
         }
@@ -57,7 +57,7 @@ public class QrCodeServiceImpl implements QrCodeService {
 
         if (qrCodeRepository.existsByCellId(cellId)) {
             qrCode = qrCodeRepository.findByCellId(cellId)
-                    .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUNT));
+                    .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUND));
         } else {
             qrCode = new QRCode();
         }
@@ -79,7 +79,7 @@ public class QrCodeServiceImpl implements QrCodeService {
 
         if (qrCodeRepository.existsByStorageObjectId(objectId)) {
             qrCode = qrCodeRepository.findByStorageObjectId(objectId)
-                    .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUNT));
+                    .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUND));
         } else {
             qrCode = new QRCode();
         }
@@ -95,7 +95,7 @@ public class QrCodeServiceImpl implements QrCodeService {
     @Override
     public QrCodeDto findQrCodeByStorage(Long storageId) {
         QRCode qrCode = qrCodeRepository.findByStorageId(storageId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUNT));
+                .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUND));
 
         return qrCodeMapper.mapToForStorage(qrCode);
     }
@@ -103,7 +103,7 @@ public class QrCodeServiceImpl implements QrCodeService {
     @Override
     public QrCodeDto findQrCodeByCell(Long cellId) {
         QRCode qrCode = qrCodeRepository.findByCellId(cellId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUNT));
+                .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUND));
 
         return qrCodeMapper.mapToForCell(qrCode);
     }
@@ -111,7 +111,7 @@ public class QrCodeServiceImpl implements QrCodeService {
     @Override
     public QrCodeDto findQrCodeByStorageObject(Long objectId) {
         QRCode qrCode = qrCodeRepository.findByStorageObjectId(objectId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUNT));
+                .orElseThrow(() -> new BusinessException(ErrorCode.QRCODE_NOT_FOUND));
 
         return qrCodeMapper.mapToForStorageObject(qrCode);
     }
