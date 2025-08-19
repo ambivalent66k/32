@@ -24,6 +24,7 @@ public interface StorageMapper {
     @Mapping(source = "parentStorage.id", target = "parentStorageId")
     StorageDto mapTo(Storage storage);
 
+    @Mapping(source = "children", target = "children")
     @Mapping(source = "parentStorage.id", target = "parentStorageId")
     StorageDtoResponse mapToDto(Storage storage);
 

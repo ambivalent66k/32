@@ -16,3 +16,16 @@ spring:
   liquibase:
     enabled: true
     change-log: db/changelog/main-changelog.xml
+
+# Health checks для Docker
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+  health:
+    defaults:
+      enabled: true
