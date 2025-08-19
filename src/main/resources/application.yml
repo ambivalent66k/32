@@ -17,7 +17,17 @@ spring:
     enabled: true
     change-log: db/changelog/main-changelog.xml
 
-# Health checks для Docker
+springdoc:
+  swagger-ui:
+    path: swagger-ui/index.html
+
+s3:
+  endpoint: ${ENDPOINT}
+  access-key: ${ACCESS-KEY}
+  secret-key: ${SECRET-KEY}
+  bucket-name: ${BUCKET-NAME}
+  region: ${REGION}
+
 management:
   endpoints:
     web:
