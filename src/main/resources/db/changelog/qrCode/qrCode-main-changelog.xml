@@ -4,6 +4,6 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include file="db/changelog/cell/v1/cell-v1-changest.sql"/>
+    <include file="db/changelog/qrCode/v1/qrCode-v1-changeset.sql"/>
 
 </databaseChangeLog>
