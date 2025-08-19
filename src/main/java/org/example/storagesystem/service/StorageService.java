@@ -1,12 +1,10 @@
 package org.example.storagesystem.service;
 
-import org.example.storagesystem.dto.cell.CellMoveDto;
-import org.example.storagesystem.dto.cell.response.CellDtoResponseOnMove;
 import org.example.storagesystem.dto.storage.StorageDto;
 import org.example.storagesystem.dto.storage.StorageMoveDto;
+import org.example.storagesystem.dto.storage.StoragePatchDto;
 import org.example.storagesystem.dto.storage.response.StorageDtoResponse;
 import org.example.storagesystem.dto.storage.response.StorageDtosResponse;
-import org.example.storagesystem.dto.storage.StoragePatchDto;
 import org.springframework.data.domain.Page;
 
 public interface StorageService {

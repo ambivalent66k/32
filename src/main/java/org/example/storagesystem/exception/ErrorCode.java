@@ -11,7 +11,7 @@ public enum ErrorCode {
             "storage cannot be self",
             HttpStatus.BAD_REQUEST),
     STORAGE_HAS_CYCLE("STORAGE_HAS_CYCLE", "storage has cycle", HttpStatus.BAD_REQUEST),
-    STORAGE_IS_NOT_EMPTY("STORAGE_IS_NOT_EMPTY", "storage is not empty", HttpStatus.BAD_REQUEST),
+    STORAGE_IS_NOT_EMPTY("STORAGE_IS_NOT_EMPTY", "storage is not empty", HttpStatus.CONFLICT),
     PARENT_CELL_NOT_FOUND("PARENT_CELL_NOT_FOUND", "parent cell not found", HttpStatus.BAD_REQUEST),
     PARENT_CELL_IN_OTHER_STORAGE(
             "PARENT_CELL_IN_OTHER_STORAGE",
@@ -29,7 +29,7 @@ public enum ErrorCode {
             "PARENT_CELL_CANNOT_BE_SELF",
             "parent cell cannot be self",
             HttpStatus.BAD_REQUEST),
-    CELL_IS_NOT_EMPTY("CELL_IS_NOT_EMPTY", "cell is not empty", HttpStatus.BAD_REQUEST),
+    CELL_IS_NOT_EMPTY("CELL_IS_NOT_EMPTY", "cell is not empty", HttpStatus.CONFLICT),
     NEW_CAPACITY_LESS_THEN_OCCUPIED(
             "NEW_CAPACITY_LESS_THEN_OCCUPIED",
             "new capacity less then occupied",
@@ -53,11 +53,13 @@ public enum ErrorCode {
     NOT_ENOUGH_CELL_CAPACITY(
             "NOT_ENOUGH_CELL_CAPACITY",
             "not enough capacity",
-            HttpStatus.BAD_REQUEST),
+            HttpStatus.CONFLICT),
     STORAGE_OBJECT_NOT_ENOUGH(
             "STORAGE_OBJECT_NOT_ENOUGH",
             "storage object not enough",
-            HttpStatus.BAD_REQUEST),
+            HttpStatus.CONFLICT),
+    PHOTO_NOT_UPLOADED("PHOTO_NOT_UPLOADED", "photo not uploaded", HttpStatus.BAD_REQUEST),
+    PHOTO_NOT_DELETED("PHOTO_NOT_DELETED", "photo not deleted", HttpStatus.BAD_REQUEST),
     WRONG_TYPE_OF_ATTRIBUTE(
             "WRONG_TYPE_OF_ATTRIBUTE",
             "wrong type of attribute",
@@ -66,7 +68,7 @@ public enum ErrorCode {
             "QUANTITY_CANNOT_BE_NEGATIVE",
             "quantity cannot be negative",
             HttpStatus.BAD_REQUEST),
-    QRCODE_NOT_FOUND("QRCODE_NOT_FOUND", "qrcode not found", HttpStatus.NOT_FOUND),
+    QRCODE_NOT_FOUNT("QRCODE_NOT_FOUND", "qrcode not found", HttpStatus.NOT_FOUND),
     ;
 
 

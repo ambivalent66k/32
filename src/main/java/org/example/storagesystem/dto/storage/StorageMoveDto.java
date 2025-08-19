@@ -1,6 +1,7 @@
 package org.example.storagesystem.dto.storage;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class StorageMoveDto {
 
     private String reason;
 
+    @Schema(hidden = true)
     private boolean parentStorageIdIsPresent;
 
     @JsonSetter("parentStorageId")

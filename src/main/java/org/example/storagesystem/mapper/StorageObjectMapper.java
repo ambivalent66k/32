@@ -1,7 +1,6 @@
 package org.example.storagesystem.mapper;
 
 import org.example.storagesystem.dto.storageObject.StorageObjectDto;
-import org.example.storagesystem.dto.storageObject.StorageObjectMove;
 import org.example.storagesystem.dto.storageObject.StorageObjectPatchDto;
 import org.example.storagesystem.dto.storageObject.response.StorageObjectDtoResponse;
 import org.example.storagesystem.entity.StorageObject;
@@ -23,6 +22,8 @@ public interface StorageObjectMapper {
 //    @Mapping(target = "storage", ignore = true)
     StorageObject mapTo(StorageObjectDto dto);
 
+    @Mapping(target = "cellId", source = "cell.id")
+    @Mapping(target = "storageId", source = "storage.id")
     StorageObjectDtoResponse toDto(StorageObject storageObject);
 
     @Mapping(target = "storage", ignore = true)
