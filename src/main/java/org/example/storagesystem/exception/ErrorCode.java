@@ -65,7 +65,9 @@ public enum ErrorCode {
     QUANTITY_CANNOT_BE_NEGATIVE(
             "QUANTITY_CANNOT_BE_NEGATIVE",
             "quantity cannot be negative",
-            HttpStatus.BAD_REQUEST)
+            HttpStatus.BAD_REQUEST),
+    STRATEGY_NOT_FOUND("STRATEGY_NOT_FOUND", "strategy not found", HttpStatus.NOT_FOUND),
+    UNKNOWN_ATTRIBUTE("UNKNOWN_ATTRIBUTE", "unknown attribute %s", HttpStatus.BAD_REQUEST),
     ;
 
     private final String code;
