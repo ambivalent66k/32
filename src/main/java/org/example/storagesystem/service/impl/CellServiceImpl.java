@@ -151,7 +151,7 @@ public class CellServiceImpl implements CellService {
 
     @Override
     public Page<CellDtosResponse> findAll(int page, int size) {
-        Page<Cell> cells = cellRepository.findAllWithStorage(PageRequest.of(page, size));
+        Page<Cell> cells = cellRepository.findAll(PageRequest.of(page, size));
         return cells.map(cellMapper::mapToList);
     }
 

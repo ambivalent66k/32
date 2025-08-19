@@ -10,11 +10,11 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
 
   liquibase:
-    enabled: false
+    enabled: true
     change-log: db/changelog/main-changelog.xml
 
 springdoc:
@@ -27,3 +27,15 @@ s3:
   secret-key: ${SECRET-KEY}
   bucket-name: ${BUCKET-NAME}
   region: ${REGION}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+  health:
+    defaults:
+      enabled: true
