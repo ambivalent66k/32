@@ -68,7 +68,13 @@ public enum ErrorCode {
             "QUANTITY_CANNOT_BE_NEGATIVE",
             "quantity cannot be negative",
             HttpStatus.BAD_REQUEST),
-    QRCODE_NOT_FOUNT("QRCODE_NOT_FOUND", "qrcode not found", HttpStatus.NOT_FOUND),
+    QRCODE_NOT_FOUND("QRCODE_NOT_FOUND", "qrcode not found", HttpStatus.NOT_FOUND),            
+    STRATEGY_NOT_FOUND("STRATEGY_NOT_FOUND", "strategy not found", HttpStatus.NOT_FOUND),
+    UNKNOWN_ATTRIBUTE("UNKNOWN_ATTRIBUTE", "unknown attribute %s", HttpStatus.BAD_REQUEST),
+    NOTIFICATION_RULE_NOT_FOUND(
+            "NOTIFICATION_RULE_NOT_FOUND",
+            "notification not found with id %s",
+            HttpStatus.NOT_FOUND),
     ;
 
 
