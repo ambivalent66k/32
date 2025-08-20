@@ -11,4 +11,5 @@
     <include file="db/changelog/notificationRule/notificationRule-main-changelog.xml"/>
     <include file="db/changelog/notification/notification-main-changelog.xml"/>
 
+
 </databaseChangeLog>
