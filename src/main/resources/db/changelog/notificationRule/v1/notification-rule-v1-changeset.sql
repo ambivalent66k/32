@@ -9,7 +9,7 @@ create table if not exists notification_rules
     condition_config  JSONB,
     recipients_config JSONB,
     message_text      varchar(500) not null,
-    is_active         bool default title,
+    is_active         bool default true,
     created_by        bigint       not null,
     created_at        timestamp    not null,
     updated_at        timestamp
