@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("http://10.10.146.221/api/v1/cells")
+@RequestMapping("api/v1/cells")
 @Tag(name = "Cells", description = "Управление ячейками хранения")
 public class CellController {
     private final CellService cellService;
