@@ -1,7 +1,6 @@
 spring:
   config:
     import: optional:file:.env[.properties]
-
   datasource:
     url: jdbc:postgresql://${DB_URL}:${DB_PORT}/${DB_NAME}
     username: ${DB_USERNAME}
@@ -18,17 +17,13 @@ spring:
     change-log: db/changelog/main-changelog.xml
 
   mail:
-    host: ${MAIL-HOST}
-    port: ${MAIL-PORT}
+    protocol: smtp
+    host: smtp.yandex.ru
+    port: 465
     username: ${MAIL-USERNAME}
     password: ${MAIL-PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
+    ssl:
+      enabled: true
 
 springdoc:
   swagger-ui:

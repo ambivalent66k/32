@@ -1,12 +1,11 @@
 package org.example.storagesystem.dto.notification;
 
-import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.storagesystem.enums.ConditionType;
 
 import java.util.Map;
 
@@ -14,22 +13,17 @@ import java.util.Map;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationRuleRequest {
-    @NotBlank(message = "it cannot be empty")
-    @Size(max = 50, message = "wrong size")
+public class NotificationRulePatchDto {
+    @Size(min = 1, max = 50, message = "wrong size")
     private String title;
-
-    private ConditionType conditionType;
 
     private Map<String, Object> conditionConfig;
 
     private Map<String, Object> recipientsConfig;
 
-    @NotBlank(message = "it cannot be empty")
-    @Size(max = 500, message = "wrong size")
+    @Size(min = 1, max = 500, message = "wrong size")
     private String messageText;
 
-    private Long createdBy;
-
-    private boolean isActive;
+    @JsonProperty("is_active")
+    private Boolean isActive;
 }

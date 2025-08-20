@@ -16,6 +16,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Setter
@@ -46,6 +48,9 @@ public class NotificationRule {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "recipients_config", columnDefinition = "jsonb")
     private Map<String, Object> recipientsConfig;
+
+    @OneToMany(mappedBy = "rule", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Notification> notifications = new ArrayList<>();
 
     @Column(name = "message_text", nullable = false)
     private String messageText;
