@@ -45,6 +45,8 @@ public class StorageServiceImpl implements StorageService {
 
         storageRepository.save(storage);
 
+        storage.setCreatedBy(1L); // временно
+
         return storageMapper.mapTo(storage);
     }
 

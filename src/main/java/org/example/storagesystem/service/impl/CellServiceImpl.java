@@ -59,6 +59,8 @@ public class CellServiceImpl implements CellService {
             cell.setParentCell(parentCell);
         }
 
+        cell.setCreatedBy(1L); // временно
+
         cellRepository.save(cell);
 
         return cellMapper.mapTo(cell);

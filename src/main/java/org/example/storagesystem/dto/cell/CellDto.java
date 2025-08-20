@@ -38,7 +38,6 @@ public class CellDto {
 
     private Long parentCellId;
 
-    @NotNull(message = "it cannot be empty")
     private Long createdBy;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
