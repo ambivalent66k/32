@@ -101,7 +101,6 @@
             <version>${springdoc.version}</version>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
