@@ -13,18 +13,21 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = "spring",
-        uses = CustomAttributeMapper.class,
+        uses = {CustomAttributeMapper.class, StorageObjectMapper.class},
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CellMapper {
     @Mapping(target = "storage", ignore = true)
     @Mapping(target = "parentCell", ignore = true)
     Cell mapTo(CellDto cellDto);
 
-    @Mapping(source = "parentCell.id", target = "parentCellId")
     @Mapping(source = "storage.id", target = "storageId")
+    @Mapping(source = "parentCell.id", target = "parentCellId")
     @Mapping(target = "children", ignore = true)
     CellDto mapTo(Cell cell);
 
+    @Mapping(source = "storage.id", target = "storageId")
+    @Mapping(source = "parentCell.id", target = "parentCellId")
+    @Mapping(source = "storageObjects", target = "storageObjects")
     CellDtoResponse mapToDto(Cell cell);
 
     @Mapping(target = "storageId", source = "storage.id")

@@ -1,4 +1,4 @@
-package org.example.storagesystem.dto.cell;
+package org.example.storagesystem.dto.qrCode;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -8,30 +8,21 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChildCellDto {
+public class QrCodeDto {
     private Long id;
 
-    private String name;
+    private String qrContent;
 
-    private String location;
+    private Long storageObjectId;
 
-    private String description;
-
-    private Long createdBy;
-
-    private int capacity;
+    private Long cellId;
 
     private Long storageId;
 
-    private Long parentCellId;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime createdAt;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
-    private LocalDateTime updatedAt;
 }

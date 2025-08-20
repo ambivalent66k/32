@@ -7,8 +7,8 @@
     <include file="db/changelog/storage/storage-main-changelog.xml"/>
     <include file="db/changelog/cell/cell-main-changelog.xml"/>
     <include file="db/changelog/object/object-main-changelog.xml"/>
+    <include file="db/changelog/qrCode/qrCode-main-changelog.xml"/>
     <include file="db/changelog/notificationRule/notificationRule-main-changelog.xml"/>
     <include file="db/changelog/notification/notification-main-changelog.xml"/>
-
 
 </databaseChangeLog>
