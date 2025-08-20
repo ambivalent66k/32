@@ -71,6 +71,8 @@ public class StorageObjectServiceImpl implements StorageObjectService {
             storageObject.setPhotoUrl(phUrl);
         }
 
+        storageObject.setCreatedBy(1L);
+
         storageObjectRepository.save(storageObject);
 
         return storageObjectMapper.mapTo(storageObject);
