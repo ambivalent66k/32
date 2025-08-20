@@ -21,13 +21,13 @@ public class StorageObjectMove {
 
     private boolean cellIdIsPresent;
 
-    @JsonSetter("storageId")
+    @JsonSetter("storage_id")
     public void setStorageId(Long storageId) {
         this.storageId = storageId;
         this.storageIdIsPresent = true;
     }
 
-    @JsonSetter("cellId")
+    @JsonSetter("cell_id")
     public void setCellId(Long cellId) {
         this.cellId = cellId;
         this.cellIdIsPresent = true;
