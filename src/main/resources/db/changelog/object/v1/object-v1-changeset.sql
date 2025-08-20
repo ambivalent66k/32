@@ -19,6 +19,7 @@ create table if not exists storage_objects
     custom_attributes jsonb,
     created_by        bigint      not null,
     created_at        timestamp   default current_timestamp,
+    updated_at        timestamp,
     constraint storage_id_fk foreign key (storage_id) references storages (id),
     constraint cell_id_fk foreign key (cell_id) references cells (id)
 );
