@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("http://10.10.146.221/api/v1/objects")
+@RequestMapping("api/v1/objects")
 public class StorageObjectController {
     private final StorageObjectService storageObjectService;
 

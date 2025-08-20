@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("http://10.10.146.221/api/v1/storages")
+@RequestMapping("api/v1/storages")
 @Tag(name = "Storages", description = "Управление хранилищами")
 public class StorageController {
     private final StorageService storageService;

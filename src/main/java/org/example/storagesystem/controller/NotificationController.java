@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("http://10.10.146.221/api/v1/notifications")
+@RequestMapping("api/v1/notifications")
 public class NotificationController {
     private final NotificationService notificationService;
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("http://10.10.146.221/api/v1/notifications/rules")
+@RequestMapping("api/v1/notifications/rules")
 public class NotificationRuleController {
     private final NotificationRuleService notificationRuleService;
 
