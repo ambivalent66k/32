@@ -22,13 +22,13 @@ public class CellMoveDto {
 
     private boolean parentCellIdIsPresent;
 
-    @JsonSetter("storageId")
+    @JsonSetter("storage_id")
     public void setStorageId(Long storageId) {
         this.storageId = storageId;
         this.storageIdIsPresent = true;;
     }
 
-    @JsonSetter("parentCellId")
+    @JsonSetter("parent_cell_id")
     public void setParentCellId(Long parentCellId) {
         this.parentCellId = parentCellId;
         this.parentCellIdIsPresent = true;

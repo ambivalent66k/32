@@ -1,6 +1,8 @@
 package org.example.storagesystem.dto.cell;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,6 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CellDto {
     private Long id;
 
@@ -31,6 +34,7 @@ public class CellDto {
     private String location;
 
     @NotNull(message = "it cannot be empty")
+    @Min(value = 1, message = "must be bigger than 1")
     private int capacity;
 
     @NotNull(message = "it cannot be empty")

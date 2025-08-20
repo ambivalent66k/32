@@ -21,7 +21,7 @@ public class StorageMoveDto {
     @Schema(hidden = true)
     private boolean parentStorageIdIsPresent;
 
-    @JsonSetter("parentStorageId")
+    @JsonSetter("parent_storage_id")
     public void setStorageId(Long parentStorageId) {
         this.parentStorageId = parentStorageId;
         parentStorageIdIsPresent = true;
