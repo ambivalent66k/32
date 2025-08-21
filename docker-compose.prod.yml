@@ -54,6 +54,13 @@ services:
       - S3_PASSWORD=${S3_PASSWORD}
       - S3_API_PORT=${S3_API_DOCKER_PORT}
       - S3_WEB_PORT=${S3_WEB_DOCKER_PORT}
+      - ENDPOINT=${ENDPOINT}
+      - ACCESS_KEY=${ACCESS_KEY}
+      - SECRET_KEY=${SECRET_KEY}
+      - BUCKET_NAME=${BUCKET_NAME}
+      - REGION=${REGION}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
     expose:
       - "8080"
     volumes:
